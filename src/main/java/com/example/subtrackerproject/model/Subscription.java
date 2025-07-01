@@ -1,7 +1,6 @@
 package com.example.subtrackerproject.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,10 +12,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Subscription {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -33,5 +31,9 @@ public class Subscription {
 
     @ManyToOne
     private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 }
 
